@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Welcome ~~ 欢迎
+devtools~
+<!--    th 前缀,引用上下文相对路径-->
+<img th:src="@{/img/little.png}">
+
+<div id="footer" th:fragment="footerFragement">@copy;2020 lipengf</div>
+
+<!--工具-->
+<p th:text="${#strings.substring('text',0,3)}"></p>
+<p th:text="${#bools.isFalse(1==1)}"></p>
+
+
+</body>
+</html>

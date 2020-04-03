@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DESIGN</title>
+</head>
+<body>
+<!--/*@thymesVar id="wrap" type=""*/-->
+<!--    <div th:each="ingredient : ${wrap}">-->
+<!--        &lt;!&ndash;/*@thymesVar id="id" type="com.jony.boot5.boottest.entity.Ingredient"*/&ndash;&gt;-->
+<!--        <input name="ingredients" type="checkbox" th:value="${ingredient.id}"/>-->
+<!--        <span th:text="${ingredient.name}" >text</span><br/>-->
+<!--    </div>-->
+
+<h1>Design your taco!</h1>
+<img th:src="@{/img/little.png}" th:alt-title="logo"/>
+
+<form method="POST" th:object="${design}">
+    <div class="grid">
+        <div class="ingredient-group" id="wraps">
+            <h3>Designate your wrap:</h3>
+            <div th:each="ingredient,status : ${wrap}">
+                <input name="ingredients" type="checkbox" th:value="${ingredient.id}"
+                />
+                <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+
+        <div class="ingredient-group" id="proteins">
+            <h3>Pick your protein:</h3>
+            <div th:each="ingredient : ${protein}">
+                <input name="ingredients" type="checkbox" th:value="${ingredient.id}"
+                />
+                <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+
+        <div class="ingredient-group" id="cheeses">
+            <h3>Choose your cheese:</h3>
+            <div th:each="ingredient : ${cheese}">
+                <input name="ingredients" type="checkbox" th:value="${ingredient.id}"
+                />
+                <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+
+        <div class="ingredient-group" id="veggies">
+            <h3>Determine your veggies:</h3>
+            <div th:each="ingredient : ${veggies}">
+                <input name="ingredients" type="checkbox" th:value="${ingredient.id}"
+                />
+                <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+
+        <div class="ingredient-group" id="sauces">
+            <h3>Select your sauce:</h3>
+            <div th:each="ingredient : ${sauce}">
+                <input name="ingredients" type="checkbox" th:value="${ingredient.id}"
+                />
+                <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <h3>Name your taco creation:</h3>
+        <input type="text" th:field="*{name}"/>
+        <span th:text="*{name}">nnn</span>
+        <p th:text="${#ctx.getLocale()}"></p>
+        <p th:text="${#request.getMethod()}"></p>
+        <p th:text="${#response.getWriter().print('XXXXXXXX')}"></p>
+        <p th:text="${#response.getStatus()}"></p>
+        <p th:text="${#session.id}"></p>
+        <!--   session 直接取值   -->
+        <p th:text="${session.user}"/>
+
+        <!--字符串连接-->
+        <p th:text="'sss'+ 'xxx'"></p>
+        <!--        字面量算数运算 -->
+
+        <!--     二元运算符   -->
+        <p th:text="${too} ?: '二元运算符默认值'"/>
+        <!--        无操作符-->
+        <p th:text="${main} ?: _">无操作符</p>
+        <!--        th:text默认会对含有 HTML 标签的内容进行字符转义；
+        th:utext（Unescaped Text）则不会对含有 HTML 标签的内容进行字符转义；-->
+        <!--        <p th:utext="<span>nihao</span>"></p>-->
+
+        <br/>
+
+        <button>Submit your taco</button>
+    </div>
+</form>
+<!--公共代码引用-->
+<div th:insert="home :: footerFragement"></div>
+
+<!--~引用-->
+<div th:insert="~{home::footerFragement}"></div>
+<!--ID 引用-->
+<div th:insert="~{home :: #footer}">this is a text</div>
+<!--replace-->
+<div th:replace="home :: #footer"></div>
+<!--th：属性值-->
+<a th:text="百度" th:href="@{http://www.baidu.com}" target="_blank"></a>
+<!--attrappend-->
+<div class="content " th:attrappend="class = ${out}? 'enable':'disable'"></div>
+
+<input type="checkbox" th:checked="${design}"/>记住我
+
+<!--条件判断-->
+<a th:if="${design!=null}">判断IF</a>
+<!--条件判断取反-->
+<a th:unless="${design!=null}">判断IF</a>
+<!--swich 搭配case-->
+<div th:switch="${design}">
+    <p th:case="not null">空</p>
+    <p th:default>哈哈</p>
+</div>
+<!--定义局部变量-->
+<p th:with="name='fanlychie',htmlContent='<h1>Text<h1>'">
+    <span th:text="${name}"></span>
+
+    <!--内联表达式-->
+    <span>The message is : [[${name}]]</span>
+    <!--    utext 不转义字符-->
+    <span>The message is : [(${htmlContent})]</span>
+
+</p>
+
+<script th:inline="javascript">
+    var id = [[${#session.getId()}]];
+    alert("session_id：" + id);
+</script>
+</body>
+</html>
