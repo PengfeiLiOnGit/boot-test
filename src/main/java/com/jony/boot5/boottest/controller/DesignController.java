@@ -48,6 +48,12 @@ public class DesignController {
         return "design";
     }
 
+    @PostMapping
+    public String processDesign(Taco design){
+        log.info(design);
+        return "redirect:/orders/current";
+    }
+
     private List<Ingredient> filterByType(
             List<Ingredient> ingredients, Type type) {
         return ingredients
