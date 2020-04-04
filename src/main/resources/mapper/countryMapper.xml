@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jony.boot5.boottest.mapper.CountryMapper">
+    <select id="selectAll" resultType="Country">
+        select
+        <include refid="col_sql"/>
+        FROM COUNTRY
+    </select>
+
+    <select id="selectById" resultType="Country">
+        select
+        <include refid="col_sql"/>
+        from COUNTRY
+        where ID = #{id}
+    </select>
+
+    <sql id="col_sql">
+         id,COUNTRYNAME,COUNTRYCODE,IMG,NOW
+    </sql>
+</mapper>

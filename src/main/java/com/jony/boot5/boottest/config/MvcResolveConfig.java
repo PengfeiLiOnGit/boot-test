@@ -5,12 +5,14 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * 使用视图控制器
+ * MVC config
  */
 @Configuration
-public class ViewResolve implements WebMvcConfigurer {
+public class MvcResolveConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.addViewController("/").setViewName("home");
+        registry.addViewController("/login").setViewName("login");
     }
+
 }
