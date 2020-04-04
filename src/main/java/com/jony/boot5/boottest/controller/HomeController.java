@@ -10,10 +10,10 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
-    public String home(HttpSession session){
-        session.setAttribute("user","normal");
-        return "home";
-    }
+//    @GetMapping("/")
+//    public String home(HttpSession session){
+//        session.setAttribute("user","normal");
+//        return "home";
+//    }
 
 }
