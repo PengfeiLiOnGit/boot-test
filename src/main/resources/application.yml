@@ -1,0 +1,44 @@
+#如果不使用devtool 则需要指定cache 为false
+spring:
+  thymeleaf:
+    cache: false
+#    配置数据源
+  datasource:
+    name: batis
+    password: 1234
+    url: jdbc:oracle:thin:@localhost:1521:credit
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+#    定义数据池
+    hikari:
+      maximum-pool-size: 500
+      minimum-idle: 1
+      idle-timeout: 60
+#      定义测试数据
+    schema: batis-schema.sql
+    data: batis-data.sql
+#    orm mybatis
+mybatis:
+#  接口类型别名
+  type-aliases-package: com.jony.boot5.boottest.entity
+#  mapper 数据文件扫描
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+#    配置驼峰规则
+    map-underscore-to-camel-case: true
+
+#服务器端口
+server:
+  port: 8443
+#  配置SSL
+  ssl:
+    key-store: classpath:mykeys.jkd
+    key-store-password: lipengfei
+    key-password: lipengfei
+
+#    日志打印规则
+logging:
+  level:
+    root: warn
+    org:
+      springframework:
+        security: DEBUG
