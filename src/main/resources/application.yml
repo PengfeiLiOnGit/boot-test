@@ -2,38 +2,42 @@
 spring:
   thymeleaf:
     cache: false
-#    配置数据源
+  #    配置数据源
   datasource:
-    name: batis
+    username: batis
     password: 1234
     url: jdbc:oracle:thin:@localhost:1521:credit
     driver-class-name: oracle.jdbc.driver.OracleDriver
-#    定义数据池
+    #    定义数据池
     hikari:
       maximum-pool-size: 500
       minimum-idle: 1
       idle-timeout: 60
-#      定义测试数据
-    schema: batis-schema.sql
-    data: batis-data.sql
+    #      定义测试数据
+    schema: classpath:batis-schema.sql
+    data: classpath:batis-data.sql
+  # 设置当前数据加载的模式-指定需要再加的模式或模式文件
+  profiles:
+    active: dev
+
 #    orm mybatis
 mybatis:
-#  接口类型别名
+  #  接口类型别名
   type-aliases-package: com.jony.boot5.boottest.entity
-#  mapper 数据文件扫描
+  #  mapper 数据文件扫描
   mapper-locations: classpath:mapper/*.xml
   configuration:
-#    配置驼峰规则
+    #    配置驼峰规则
     map-underscore-to-camel-case: true
-
 #服务器端口
 server:
-  port: 8443
+  port: 9090
+  address:
 #  配置SSL
-  ssl:
-    key-store: classpath:mykeys.jkd
-    key-store-password: lipengfei
-    key-password: lipengfei
+#  ssl:
+#    key-store: classpath:mykeys.jkd
+#    key-store-password: lipengfei
+#    key-password: lipengfei
 
 #    日志打印规则
 logging:
@@ -42,3 +46,22 @@ logging:
     org:
       springframework:
         security: DEBUG
+
+#配置元数据
+
+#位置在 META-INF  additional-spring-configuration-metadata.json
+#配置元数据需要依赖 spring-boot-configuration-processor
+taco:
+  orders:
+    rowNum: 20
+    pageSize: 20
+
+# yml 支持 使用 application-{profie名}.xml 和在同一个文件中设置数据（使用三个分割线 ---）
+---
+spring:
+  profiles: prod
+server:
+  port: 8080
+taco:
+  orders:
+    pageSize: 10
