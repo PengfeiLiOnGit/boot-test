@@ -9,6 +9,16 @@
       "name": "taco.orders.rowNum",
       "type": "java.lang.String",
       "description": "Description for taco.orders.rowNum."
+    },
+    {
+      "name": "custom.csrf",
+      "type": "java.lang.String",
+      "description": "Description for custom.csrf."
+    },
+    {
+      "name": "custom.csrf.excludeUrls",
+      "type": "java.lang.String",
+      "description": "Description for custom.csrf.excludeUrls."
     }
   ]
 }

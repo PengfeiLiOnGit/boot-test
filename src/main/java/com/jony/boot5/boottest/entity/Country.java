@@ -4,18 +4,21 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 //JPA entity
 @Data
-@NoArgsConstructor(access=AccessLevel.PRIVATE)
+//@NoArgsConstructor(access=AccessLevel.PRIVATE)
 @Entity
 //@Table(name = "country")
 public class Country {
     @Id
-    @GeneratedValue
+    @GenericGenerator(name = "idGenerator", strategy = "uuid")
+    @GeneratedValue(generator = "idGenerator")
     private String id;
 
     private String countryname;
@@ -24,10 +27,18 @@ public class Country {
 
     private byte[] img;
 
-    private Date now;
+    private Timestamp now;
+
+    @Column(name = "update_date")
+    private Timestamp update;
 
     @PrePersist
-    void createDate(){
-        now = new Date();
+    void createDate() {
+        now = new Timestamp(System.currentTimeMillis());
+    }
+
+    @PreUpdate
+    void updateDate(){
+        update = new Timestamp(System.currentTimeMillis());
     }
 }

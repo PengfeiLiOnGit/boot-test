@@ -19,6 +19,11 @@ spring:
   # 设置当前数据加载的模式-指定需要再加的模式或模式文件
   profiles:
     active: dev
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle8iDialect
 
 #    orm mybatis
 mybatis:
@@ -42,7 +47,7 @@ server:
 #    日志打印规则
 logging:
   level:
-    root: warn
+    root: info
     org:
       springframework:
         security: DEBUG
@@ -57,6 +62,9 @@ taco:
     pageSize: 20
 
 # yml 支持 使用 application-{profie名}.xml 和在同一个文件中设置数据（使用三个分割线 ---）
+custom:
+  csrf:
+    excludeUrls: /rest,/rests
 ---
 spring:
   profiles: prod

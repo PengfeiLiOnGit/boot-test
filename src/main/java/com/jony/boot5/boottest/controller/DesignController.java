@@ -63,8 +63,9 @@ public class DesignController {
 //                    filterByType(ingredients, type));
 //        }
         Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        SysUser sysUser = (SysUser) authentication1.getPrincipal();
-        log.info(principal.getName());
+//        获取principal 用户认证信息
+        //        SysUser sysUser = (SysUser) authentication1.getPrincipal();
+//        log.info(principal.getName());
         return "design";
     }
 
