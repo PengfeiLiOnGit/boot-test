@@ -1,8 +1,14 @@
 package com.jony.boot5.boottest.config;
 
+import com.jony.boot5.boottest.entity.Country;
+import com.jony.boot5.boottest.entity.CountryResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.hateoas.server.RepresentationModelProcessor;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -31,5 +37,24 @@ public class MvcResolveConfig implements WebMvcConfigurer {
     @Profile({"dev"})
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    /**
+     * 配置自定义超链接
+     */
+    public RepresentationModelProcessor<PagedModel<Country>> countryProcessor(EntityLinks links) {
+        return new RepresentationModelProcessor<PagedModel<Country>>() {
+            @Override
+            public PagedModel<Country> process(PagedModel<Country> model) {
+                model.add(
+                        links.linkFor(Country.class)
+//                                针对url
+                                .slash("resource")
+                                .withRel("resources")
+                );
+                return model;
+            }
+        };
     }
 }
