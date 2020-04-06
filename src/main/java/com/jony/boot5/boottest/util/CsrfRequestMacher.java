@@ -28,9 +28,14 @@ public class CsrfRequestMacher implements RequestMatcher {
     @Override
     public boolean matches(HttpServletRequest request) {
 //        如果是设置在允许范围内的post或put 等请求则直接放过
-        if (excludeUrls.contains(request.getServletPath())) {
-            return false;
+        for (String exclude:excludeUrls) {
+            if(request.getServletPath().startsWith(exclude)){
+                return false;
+            }
         }
+//        if (excludeUrls.contains(request.getServletPath())) {
+//            return false;
+//        }
         return !this.allowedMethods.contains(request.getMethod());
     }
 }

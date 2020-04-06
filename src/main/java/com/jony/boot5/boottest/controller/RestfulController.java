@@ -1,12 +1,19 @@
 package com.jony.boot5.boottest.controller;
 
 import com.jony.boot5.boottest.entity.Country;
+import com.jony.boot5.boottest.entity.CountryResource;
+import com.jony.boot5.boottest.entity.assembler.CountryResourceAssembler;
 import com.jony.boot5.boottest.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -49,11 +56,11 @@ public class RestfulController {
         return result;
     }
 
-    @PutMapping(path = "/{id}",consumes = {"application/json"})
+    @PutMapping(path = "/{id}", consumes = {"application/json"})
     /**
      * 全部更新或插入
      */
-    public Country putCountry(@RequestBody Country country,@PathVariable("id") String id){
+    public Country putCountry(@RequestBody Country country, @PathVariable("id") String id) {
         country.setId(id);
         return repository.save(country);
     }
@@ -62,11 +69,48 @@ public class RestfulController {
     /**
      * 更新
      */
-    public Country patchCountry(@PathVariable("id")String id,@RequestBody Country patch){
+    public Country patchCountry(@PathVariable("id") String id, @RequestBody Country patch) {
         Country country = repository.findById(id).get();
-        if(country!=null){
+        if (country != null) {
 //            IF 判断设置
         }
         return repository.save(country);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCountry(@PathVariable("id") String id) {
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @GetMapping("/resource")
+//    public CollectionModel<EntityModel<Country>> getAllOnLinks() {
+    public CollectionModel<CountryResource> getAllOnLinks() {
+//        获取资源列表
+        List<Country> countries = repository.findAll();
+//        包装返回数据
+//        CollectionModel<EntityModel<Country>> resources = CollectionModel.wrap(countries);
+
+//        使用装配器为每一条数据添加链接
+//        在包装的过程中转换资源
+        CollectionModel<CountryResource> resources = new CountryResourceAssembler().toCollectionModel(countries);
+
+//        添加linkes
+//        resources.add(
+//                WebMvcLinkBuilder.linkTo(RestfulController.class)
+//                            .slash("resource")
+//                .withRel("resources")
+//        );
+
+        resources.add(
+                linkTo(methodOn(getClass()).getAllOnLinks())
+                        .withRel("resources")
+        );
+        return resources;
+    }
+
 }
