@@ -101,13 +101,18 @@ public class RestfulController {
 
 //        添加linkes
 //        resources.add(
+//        关联controller.class，使用资源链接构造器
 //                WebMvcLinkBuilder.linkTo(RestfulController.class)
+//        添加资源链接
 //                            .slash("resource")
+//        rel 指向的资源键
 //                .withRel("resources")
 //        );
 
         resources.add(
+//                  指定方法引用具体方法链接
                 linkTo(methodOn(getClass()).getAllOnLinks())
+//                        指定resources 名
                         .withRel("resources")
         );
         return resources;

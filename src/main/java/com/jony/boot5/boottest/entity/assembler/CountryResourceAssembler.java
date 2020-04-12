@@ -26,11 +26,19 @@ public class CountryResourceAssembler extends RepresentationModelAssemblerSuppor
     }
 
     @Override
+    /**
+     * 重写的实例model 方法在生成resource的时候调用
+     * 等于一个转换器，把原始的资源转换为resource对象
+     */
     protected CountryResource instantiateModel(Country entity) {
         return new CountryResource(entity);
     }
 
     @Override
+    /**
+     * 创建资源链接的方法
+     * 此方法调用createModelWithId,并指定资源标识符与所属实体
+     */
     public CountryResource toModel(Country entity) {
         return createModelWithId(entity.getId(),entity);
     }

@@ -31,7 +31,8 @@ mybatis:
     map-underscore-to-camel-case: true
 server:
   port: 9090
-
+  servlet:
+    context-path: /
 logging:
   level:
     root: info

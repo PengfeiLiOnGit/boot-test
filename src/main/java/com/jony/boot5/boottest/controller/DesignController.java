@@ -53,7 +53,6 @@ public class DesignController {
      */
     public String showDesignForm(Model model, HttpSession session, Principal principal, Authentication authentication,
                                  @AuthenticationPrincipal SysUser user) {
-
         //        List<Ingredient> ingredients = new ArrayList<>();
 //        ingredientDao.findAll().forEach(i -> ingredients.add(i));
 //
